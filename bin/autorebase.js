@@ -48,9 +48,8 @@ function rebase(branch, repositories) {
   repositories.forEach(async repository => {
     const git = simpleGit(repository)
     
-    await git.pull(branch, { '--rebase': null })
-
     try {
+      await git.pull(branch, { '--rebase': null })
       await git.rebase(['origin/master', branch])
 
       console.log(`Rebase ${repository} completed.`)
@@ -63,11 +62,15 @@ function rebase(branch, repositories) {
 
 
     if (options.push) {
-      const remoteUrl = await git.listRemote(['--get-url'])
-      await git.push([remoteUrl.replace('\n', ''), branch, '--force'])
-      await git.fetch()
+      try {
+        const remoteUrl = await git.listRemote(['--get-url'])
+        await git.push([remoteUrl.replace('\n', ''), branch, '--force'])
+        await git.fetch()
 
-      console.log(`Push ${repository} to origin completed.`)
+        console.log(`Push ${repository} to origin completed.`)
+      } catch (err) {
+        console.log(`Push ${repository} is failed.`)
+      }
     }
   })
 }
