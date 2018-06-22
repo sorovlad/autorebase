@@ -1,11 +1,12 @@
 {
-  "name": "hack",
-  "version": "0.0.1",
+  "name": "autorebase",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "autorebase": "./bin/autorebase.js"
   },
+  "preferGlobal": true,
   "author": "",
   "license": "ISC",
   "dependencies": {
